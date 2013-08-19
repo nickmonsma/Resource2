@@ -9,8 +9,6 @@ class Application
 {
 	public static $instance;
 	
-	public $Config, $Model, $Controller;
-	
 	public static function Instance()
 	{
 		return self::$instance;
@@ -22,25 +20,12 @@ class Application
 		
 		$this->load = new Loader();
 		
-		$this->InitializeConfig();
-		
-		$this->InitializeModel();
-		
-		$this->InitializeController();
-	}
-	
-	private function InitializeConfig()
-	{
 		$this->load->Resource_Config();
-	}
-	
-	private function InitializeModel()
-	{
+		
 		$this->load->Resource_Model();
-	}
-	
-	private function InitializeController()
-	{
+		
+		$this->load->Resource_View();
+		
 		$this->load->Resource_Controller();
 	}
 }

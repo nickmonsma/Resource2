@@ -14,7 +14,7 @@ class Controller_Index extends Application implements Interface_Controller
 	
 	public function Render()
 	{
-		
+		$this->lView->render('page-index');
 	}
 	
 	public function __Get($key)

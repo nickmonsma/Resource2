@@ -16,4 +16,9 @@ include('Application/Bootstrap.php');
  * Initialize Current Controller;
  */
 $Application->rController->Initialize();
+
+/**
+ * View Output;
+ */
+$Application->rView->Output();
 ?>
