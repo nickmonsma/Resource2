@@ -15,5 +15,5 @@ include('Application/Bootstrap.php');
 /**
  * Initialize Current Controller;
  */
-$Application->Controller->Initialize();
+$Application->rController->Initialize();
 ?>

@@ -31,17 +31,17 @@ class Application
 	
 	private function InitializeConfig()
 	{
-		$this->Config = $this->load->Resource_Config();
+		$this->load->Resource_Config();
 	}
 	
 	private function InitializeModel()
 	{
-		$this->Model = $this->load->Resource_Model();
+		$this->load->Resource_Model();
 	}
 	
 	private function InitializeController()
 	{
-		$this->Controller = $this->load->Resource_Controller();
+		$this->load->Resource_Controller();
 	}
 }
 ?>

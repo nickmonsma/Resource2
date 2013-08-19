@@ -16,13 +16,19 @@ class Loader
 	
 	public function __Call($class, $arguments = null)
 	{
-		if(!in_array($class, $this->classes))
+		$instance = instance();
+		if(!isset($this->classes[$class]))
 		{
 			$this->classes[$class] = new $class($arguments);
+		}
+		
+		$shortname = shortname($class);
+		if(!isset($instance->{$shortname}) && !is_null($class))
+		{
+			$instance->{$shortname} = $this->classes[$class];
 		}
 		
 		return $this->classes[$class];
 	}
 }
-
 ?>
