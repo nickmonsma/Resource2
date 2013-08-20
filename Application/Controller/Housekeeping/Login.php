@@ -5,14 +5,11 @@
 	Copyright (C) 2013 Nick Monsma;
 */
 
-class Controller_Index extends Resource_Controller
+class Controller_Housekeeping_Login extends Resource_Controller
 {
 	public function __Construct()
-	{
-		if($this->lUser->loggedin())
-		{
-			$this->lView->redirect('me');
-		}
+	{		
+		$this->lView->setTheme('Housekeeping');
 	}
 	
 	public function Render()

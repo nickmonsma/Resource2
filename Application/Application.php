@@ -16,6 +16,8 @@ class Application
 	
 	public function __Construct()
 	{
+		$this->FilterRequests();
+		
 		self::$instance =& $this;
 		
 		$this->load = new Loader();
@@ -27,6 +29,19 @@ class Application
 		$this->load->Resource_View();
 		
 		$this->load->Resource_Controller();
+	}
+	
+	private function FilterRequests()
+	{
+		foreach($_GET as $key => $value)
+		{
+			$_GET[$key] = clean($value);
+		}
+		
+		foreach($_POST as $key => $value)
+		{
+			$_POST[$key] = clean($value);
+		}
 	}
 }
 ?>

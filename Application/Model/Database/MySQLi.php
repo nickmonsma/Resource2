@@ -7,7 +7,7 @@
  
 class Model_Database_MySQLi extends Resource_Model
 {
-	private $link, $stmt, $hostname, $username, $password, $database;
+	private $link, $stmt, $row = null, $hostname, $username, $password, $database;
 	
 	public function __Construct()
 	{
@@ -85,34 +85,38 @@ class Model_Database_MySQLi extends Resource_Model
 		return $this->stmt->num_rows;
 	}
 	
-	private function assoc(&$output = array())
+	private function assoc(&$output)
 	{
 		$data = $this->stmt->result_metadata();
+		
+		$output = array();
+		$fields = array();
+		
 		while($field = $data->fetch_field())
 		{
-			$result[] =& $output[$field->name];
-		}		
+			$fields[] =& $output[$field->name];
+		}
 		
-		call_user_func_array(array($this->stmt, 'bind_result'), $result);
+		call_user_func_array(array($this->stmt, 'bind_result'), $fields);
 	}
 	
 	public function fetch_assoc()
 	{
-		$this->assoc($assoc);
+		$this->assoc($this->row);
 		
-		$is_assoc = true;
+		$is_assoc = false;
 		if($this->stmt->fetch())
 		{
 			$is_assoc = true;
 		}
 		
 		$data = array();
-		foreach($assoc as $key => $value)
+		foreach($this->row as $key => $value)
 		{
 			$data[$key] = $value;
 		}
 		
 		return ($is_assoc) ? $data : false;
-	}	
+	}
 }
 ?>

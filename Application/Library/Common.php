@@ -18,6 +18,11 @@ function __autoload($class)
 	}
 }
 
+function clean($string)
+{
+	return htmlentities(addslashes(stripslashes(trim($string))));
+}
+
 function resource_hash($string)
 {
 	$count = strlen($string);
@@ -44,5 +49,22 @@ function GenerateTicket()
 function shortname($classname)
 {
 	return strtolower(substr($classname, 0, 1)) . explode('_', $classname)[count(strpos($classname, '_'))];
+}
+
+function nicedate($string = '')
+{
+	setlocale(LC_ALL, array('nl_NL', 'nld_NLD'));
+	
+	if(empty($string))
+	{
+		$string = time();
+	}
+		
+	if(!is_numeric($string))
+	{
+		$string = strtotime($string);
+	}
+		
+	return strftime('%d-%b-%Y', $string).' '.date('H:i:s', $string);
 }
 ?>

@@ -7,31 +7,51 @@
 
 class Library_View extends Resource_View
 {
-	private $theme;
+	private $theme, $content = array(), $params = array();
 	
 	public function __Construct()
 	{
 		$this->theme = $this->rConfig->site->theme;
 	}
 	
+	public function setTheme($theme)
+	{
+		$this->theme = $theme;
+	}
+	
 	public function parse($line)
 	{
-		parent::$tpl[] = $line;
+		$this->content[] = $line;
 	}
 	
 	public function assign($key, $value)
 	{
-		parent::$params['[$'.$key.']'] = $value;
+		$this->params['[$'.$key.']'] = $value;
 	}	
 	
 	public function redirect($location = null)
 	{
 		return header("location: {$this->rConfig->site->url}/{$location}");
-	}	
+	}
 	
 	public function render($file)
 	{
-		parent::$tpl[] = file_get_contents(ROOT.'Public'.DS.'Themes'.DS.$this->theme.DS.$file.'.html');
+		$this->content[] = $this->fetch($file);
+	}
+	
+	public function fetch($file)
+	{
+		return file_get_contents(ROOT.'Public'.DS.'Themes'.DS.$this->theme.DS.$file.'.html');
+	}
+	
+	public function replace($content)
+	{
+		return strtr($content, $this->params);
+	}
+	
+	public function execute()
+	{
+		return $this->replace(implode($this->content));
 	}
 }
 ?>

@@ -5,6 +5,8 @@
 	Copyright (C) 2013 Nick Monsma;
 */
 
+error_reporting(E_ALL);
+
 /**
  * Define Folder Location;
  */
@@ -24,7 +26,6 @@ if(isset($_SERVER['HTTP_CF_CONNECTING_IP']))
 	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
 }
 
- 
 /**
  * Initialize Application;
  */

@@ -8,8 +8,8 @@
 class Resource_Controller extends Application
 {	
 	public function __Construct()
-	{	
-		
+	{		
+		$this->load->Library_User();
 	}
 	
 	public function Initialize()
@@ -19,17 +19,19 @@ class Resource_Controller extends Application
 			$class[] = ucfirst($value);
 		}
 		
-		$path = implode(DS, $class);
-		$name = 'Controller_'.str_replace(DS, '_', $path);
+		$class = implode(DS, $class);
+		$classname = 'Controller_'.str_replace(DS, '_', $class);
 		
-		if(file_exists(ROOT.'Application'.DS.'Controller'.DS.$path.'.php'))
+		if(file_exists(ROOT.'Application'.DS.'Controller'.DS.$class.'.php'))
 		{
-			$this->load->$name()->Render();
+			$this->load->$classname()->Render();
 		}
 		else
 		{
 			$this->load->Controller_Error()->Render();
 		}
+		
+		die($this->lView->execute()); ## build the template;
 	}
 	
 	public function __Get($key)

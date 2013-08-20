@@ -5,16 +5,11 @@
 	Copyright (C) 2013 Nick Monsma;
 */
 
-class Controller_Error extends Resource_Controller
+class Controller_Housekeeping extends Resource_Controller
 {
 	public function __Construct()
 	{
-		
-	}
-	
-	public function Render()
-	{
-		echo '404 brah what do you have expect ?';
+		$this->lView->redirect('housekeeping/login');
 	}
 }
 ?>
