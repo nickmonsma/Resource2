@@ -8,8 +8,11 @@
 	Project Resource II - (C) 2013 Monsma & Azoh
 */
 
-session_start();
-error_reporting(E_ALL);
-	
-require('Application/Bootstrap.php');
+class Router
+{
+	public function Execute()
+	{
+		
+	}
+}
 ?>

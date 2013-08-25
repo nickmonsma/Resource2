@@ -1,12 +1,5 @@
-<ifModule mod_php5.c>
-	php_value zlib.output_compression 16386
-	php_value register_globals off
-	php_value session.use_trans_sid 0
-</ifModule>
+RewriteEngine on
 
-<ifModule mod_rewrite.c>
-	RewriteEngine On
+RewriteRule ^(|/)$ index.php?page=$1
 
-	RewriteRule ^(|/)$ ./index.php?page=$1
-	RewriteRule ^([a-zA-Z0-9/_-]+)(|)$ ./index.php?page=$1
-</ifModule>
+RewriteRule ^([a-zA-Z0-9/_-]+)(|)$ index.php?page=$1

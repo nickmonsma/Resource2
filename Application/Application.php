@@ -1,47 +1,69 @@
 <?php
-/**
-	Project Resource 2
-	Web Application Framework
-	Copyright (C) 2013 Nick Monsma;
+/**  ____                                    
+	|  _ \ ___  ___  ___  _   _ _ __ ___ ___ 
+	| |_) / _ \/ __|/ _ \| | | | '__/ __/ _ \
+	|  _ <  __/\__ \ (_) | |_| | | | (_|  __/
+	|_| \_\___||___/\___/ \__,_|_|  \___\___|
+	 
+	Project Resource II - (C) 2013 Monsma & Azoh
 */
 
 class Application
 {
-	public static $instance;
-	
-	public static function Instance()
-	{
-		return self::$instance;
-	}
-	
 	public function __Construct()
 	{
-		$this->FilterRequests();
-		
-		self::$instance =& $this;
-		
-		$this->load = new Loader();
-		
-		$this->load->Resource_Config();
-		
-		$this->load->Resource_Model();
-		
-		$this->load->Resource_View();
-		
-		$this->load->Resource_Controller();
+		$this->InitializeConfig();
+	
+		$this->InitializeDatabase();
+	
+		$this->InitializeLibrary();
 	}
 	
-	private function FilterRequests()
-	{
-		foreach($_GET as $key => $value)
+	private function InitializeConfig()
+	{		
+		foreach(glob('Config/*.php') as $File)
 		{
-			$_GET[$key] = clean($value);
+			require($File);
 		}
 		
-		foreach($_POST as $key => $value)
+		$this->Config = json_decode(json_encode($Config));
+	}
+	
+	private function InitializeLibrary()
+	{
+		foreach(glob('Application/Library/*.php') as $File)
 		{
-			$_POST[$key] = clean($value);
+			require($File);
+			
+			$Class = explode('/', $File);
+			$Class = explode(pathinfo($File, PATHINFO_EXTENSION), end($Class));
+			$Class = explode('.', current($Class));
+			$Class = current($Class);
+				
+			$this->{$Class} = new $Class($this);
 		}
+	}
+	
+	private function InitializeDatabase()
+	{
+		$Driver = 'Database_'.$this->Config->Database->Driver;
+		
+		if(!file_exists('Application/Model/Driver/'.$this->Config->Database->Driver.'/Driver.php'))
+		{
+			trigger_error('Application/Model/Driver/'.$this->Config->Database->Driver.'/Driver.php does not exist!');
+		}
+			
+		if(!file_exists('Application/Model/Driver/'.$this->Config->Database->Driver.'/Statement.php'))
+		{
+			trigger_error('Application/Model/Driver/'.$this->Config->Database->Driver.'/Statement.php does not exist!');
+		}
+		
+		foreach(glob('Application/Model/Driver/'.$this->Config->Database->Driver.'/*.php') as $File)
+		{
+			require($File);
+		}
+		
+		$this->Database = new $Driver($this);
 	}
 }
 ?>

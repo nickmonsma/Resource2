@@ -1,33 +1,28 @@
 <?php
-/**
-	Project Resource 2
-	Web Application Framework
-	Copyright (C) 2013 Nick Monsma;
+/**  ____                                    
+	|  _ \ ___  ___  ___  _   _ _ __ ___ ___ 
+	| |_) / _ \/ __|/ _ \| | | | '__/ __/ _ \
+	|  _ <  __/\__ \ (_) | |_| | | | (_|  __/
+	|_| \_\___||___/\___/ \__,_|_|  \___\___|
+	 
+	Project Resource II - (C) 2013 Monsma & Azoh
 */
 
-error_reporting(E_ALL);
-
 /**
- * Define Folder Location;
+ * Require Application;
  */
-define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', realpath(dirname(__DIR__)).DS);
-
-/**
- * Include Common Functions;
- */
-include(ROOT.'Application'.DS.'Library'.DS.'Common.php');
-
-/**
- * Check Cloudflare Connection;
- */
-if(isset($_SERVER['HTTP_CF_CONNECTING_IP']))
-{
-	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
-}
+require('Application.php');
 
 /**
  * Initialize Application;
  */
 $Application = new Application();
+
+/**
+ * Check CloudFlare Connection;
+ */
+if(isset($_SERVER['HTTP_CF_CONNECTING_IP']))
+{
+	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
+}
 ?>
